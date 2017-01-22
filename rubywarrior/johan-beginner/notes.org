@@ -1,19 +1,55 @@
+* Code
+** Level 1
+#+begin_src ruby
+class Player
+  def play_turn(warrior)
+    warrior.walk!
+  end
+end
+#+end_src
+** Level 2
+#+begin_src ruby
+class Player
+  def play_turn(warrior)
+    if warrior.feel.empty?
+      warrior.walk!
+    else
+      warrior.attack!
+    end
+  end
+end
+#+end_src
 
+Refoctored
+#+begin_src ruby
+class Player
+  def play_turn(warrior)
+    if should_walk? warrior 
+      warrior.walk!
+    else
+      warrior.attack!
+    end
+  end
 
-
+  def should_walk?(warrior)
+    return warrior.feel.empty?
+  end
+end
+#+end_src
 * Readme:s
 ** Level 1
 
 You see before yourself a long hallway with stairs at the end. There is nothing in the way.
 
 Tip: Call warrior.walk! to walk forward in the Player 'play_turn' method.
-
+#+begin_quote
  --------
 |@      >|
  --------
-
   > = Stairs
   @ = johan (20 HP)
+#+end_quote
+
 
 
 Warrior Abilities:
@@ -23,23 +59,58 @@ Warrior Abilities:
 
 
 When you're done editing player.rb, run the rubywarrior command again.
-** Level 2:wq
+<<<<<<< HEAD
 
+** Level 2
 
 It is too dark to see anything, but you smell sludge nearby.
 
 Tip: Use warrior.feel.empty? to see if there is anything in front of you, and warrior.attack! to fight it. Remember, you can only do one action (ending in !) per turn.
-
+#+begin_quote
  --------
 |@   s  >|
  --------
-
   > = Stairs
   @ = johan (20 HP)
   s = Sludge (12 HP)
+#+end_quote
+
 
 
 Warrior Abilities:
+
+  warrior.feel
+    Returns a Space for the given direction (forward by default).
+
+  warrior.attack!
+    Attacks a unit in given direction (forward by default).
+
+  warrior.walk!
+    Move in the given direction (forward by default).
+
+
+When you're done editing player.rb, run the rubywarrior command again.
+** Level 3
+
+The air feels thicker than before. There must be a horde of sludge.
+
+Tip: Be careful not to die! Use warrior.health to keep an eye on your health, and warrior.rest! to earn 10% of max health back.
+#+begin_quote
+ ---------
+|@ s ss s>|
+ ---------
+  > = Stairs
+  @ = johan (20 HP)
+  s = Sludge (12 HP)
+#+end_quote
+
+Warrior Abilities:
+
+  warrior.health
+    Returns an integer representing your health.
+
+  warrior.rest!
+    Gain 10% of max health back, but do nothing more.
 
   warrior.feel
     Returns a Space for the given direction (forward by default).
