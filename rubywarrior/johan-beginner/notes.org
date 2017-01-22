@@ -23,7 +23,8 @@ Warrior Abilities:
 
 
 When you're done editing player.rb, run the rubywarrior command again.
-Level 2
+** Level 2:wq
+
 
 It is too dark to see anything, but you smell sludge nearby.
 
