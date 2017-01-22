@@ -3,20 +3,57 @@ class Player
     @healt_last_turn = 0
   end
   def play_turn(warrior)
-    if should_walk? warrior 
+    
+    if must_step_back? warrior
+      warrior.walk! :backward
+    elsif can_walk_forward? warrior 
       warrior.walk!
+    elsif must_rest? warrior
+      warrior.rest!
     else
       warrior.attack!
     end
   end
-  def should_walk?(warrior)
-    return warrior.feel.empty?
+  def must_step_back?(warrior)
+    (! warrior.feel.empty?) && (feeling_sick? warrior)
   end
-  def i_am_healty?(warrior)
+  def can_walk_forward?(warrior)
+     warrior.feel.empty? && feeling_good?(warrior)
+  end
+  def feeling_good?(warrior)
     min_health = 10
-    return warrior.health > min_health
+    warrior.health > min_health
+  end
+  def feeling_sick?(warrior)
+    ! feeling_good?(warrior) 
   end
   def must_rest?(warrior)
-    return jada
+    feeling_sick? warrior 
   end
 end
+#  warrior.health
+#  warrior.rest!
+#  warrior.feel
+#  warrior.attack!
+#  warrior.walk!
+=begin
+class Player
+  def play_turn(warrior)
+    if @needCure == nil
+      if warrior.health < 18
+        warrior.walk! :backward
+        @needCure = true
+      else
+        if warrior.feel.empty?
+          warrior.walk!
+        else
+          warrior.attack!
+        end
+      end
+    else
+      warrior.rest!
+      @needCure = nil
+    end
+  end
+end
+=end
