@@ -13,12 +13,18 @@ class Player
     else
       warrior.attack!
     end
+    @healt_last_turn = warrior.health
   end
   def must_step_back?(warrior)
     (! warrior.feel.empty?) && (feeling_sick? warrior)
   end
   def can_walk_forward?(warrior)
-     warrior.feel.empty? && feeling_good?(warrior)
+    feel_god_and_next_space_is_empty =  warrior.feel.empty? && feeling_good?(warrior)
+    under_attack = health_diminished? warrior
+    under_attack || feel_god_and_next_space_is_empty
+  end
+  def healt_diminished?(warrior)
+    warrior.health < @healt_last_turn
   end
   def feeling_good?(warrior)
     min_health = 10
@@ -31,6 +37,7 @@ class Player
     feeling_sick? warrior 
   end
 end
+
 #  warrior.health
 #  warrior.rest!
 #  warrior.feel
